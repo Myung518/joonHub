@@ -30,9 +30,11 @@ public class Main {
 			list[y].add(x);
 		}
 		f();
+		StringBuilder sb = new StringBuilder();
 		for (int i = 2; i <= n; i++) {
-			System.out.println(check[i]);
+			sb.append(check[i]).append("\n");
 		}
+		System.out.println(sb.toString());
 	}
 	public static void f() {
 		q.add(1);
