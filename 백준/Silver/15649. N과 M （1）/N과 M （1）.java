@@ -3,52 +3,54 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
 
 public class Main {
+	static int N;
+	static int M;
+	static int[] path;
+	static int[] used;
 	static StringBuilder sb = new StringBuilder();
-	static List<Integer> l;
-	static int n, m;
-
+	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 
-		n = Integer.parseInt(st.nextToken()); // n까지
-		m = Integer.parseInt(st.nextToken()); // m개
+		N = Integer.parseInt(st.nextToken()); // n까지
+		M = Integer.parseInt(st.nextToken()); // m개
+		
+		path = new int[M + 1];
+		used = new int[N + 1];
 
-		for (int i = 1; i <= n; i++) {
-			l = new ArrayList<>();
-			f(i);
-		}
+		f2(0);
 		bw.write(sb.toString());
 		
 		bw.flush();
-		bw.close();
 		br.close();
+		bw.close();
 	}
 
-	public static void f(int now) {
-		if (l.contains(now)) {
-			return;
-		}
-		l.add(now);
-		if (l.size() == m) {
-			for (int tmp : l) {
-				sb.append(tmp).append(" ");
+	static void f2(int now) {
+		if(now == M) {
+			for (int i = 0; i < M; i++) {
+				sb.append(path[i]).append(" ");
 			}
 			sb.append("\n");
-			l.remove(Integer.valueOf(now));
 			return;
 		}
-		for (int i = 1; i <= n; i++) {
-			f(i);
+		
+		for(int i=1; i<=N; i++) {
+			if(used[i] == 1) continue;
+			
+			path[now] = i;
+			used[i] = 1;
+			
+			f2(now+1);
+			
+			path[now] = 0;
+			used[i] = 0;
 		}
-		l.remove(Integer.valueOf(now));
-
 	}
 
 }
