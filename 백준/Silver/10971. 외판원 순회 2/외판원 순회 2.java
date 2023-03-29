@@ -3,13 +3,12 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.Arrays;
 import java.util.stream.Stream;
 
 public class Main {
 	static int n;
 	static int[][] link;
-	static int[] memo;
+	static int[][] memo;
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -18,7 +17,7 @@ public class Main {
 
 		n = Integer.parseInt(br.readLine());
 		link = new int[n][n];
-		memo = new int[(int) Math.pow(2, n)];
+		memo = new int[n][(int) Math.pow(2, n)];
 		
 		for (int i = 0; i < n; i++) {
 			link[i] = Stream.of(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
@@ -33,7 +32,7 @@ public class Main {
 	}
 	
 	public static int f(int city, int b) {
-//		if (memo[b] != 0) return memo[b];
+		if (memo[city][b] != 0) return memo[city][b];
 		if (b == Math.pow(2, n) - 1) {
 			return link[city][0] == 0 ? Integer.MAX_VALUE : link[city][0];
 		}
@@ -47,7 +46,7 @@ public class Main {
 			min = Math.min(tmp + link[city][i], min);
 		}
 //		System.out.println(city + " " + min);
-		return memo[b] = min;
+		return memo[city][b] = min;
 	}
 
 }
